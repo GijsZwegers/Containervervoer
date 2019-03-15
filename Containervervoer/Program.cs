@@ -16,9 +16,7 @@ namespace Containervervoer
         static void Main()
         {
             //Testing purpose
-            TestClass testClass = new TestClass();
-            Ship ship = new Ship(2,2);
-            ship.CheckPossibilityForSolution(testClass.Setup());
+            
 
 
 

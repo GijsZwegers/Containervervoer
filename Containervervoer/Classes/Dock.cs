@@ -9,7 +9,7 @@ namespace Containervervoer.Classes
 {
     class Dock
     {
-        public List<Container> containers { get; private set; }
+        public List<Container> containers { get; set; } = new List<Container>();
         public Ship ship { get; private set; }
 
         private List<Container> ValuableContainers { get; set; }
@@ -31,12 +31,16 @@ namespace Containervervoer.Classes
             }
         }
 
+        public void AddMultipleContainers(List<Container> containerlist)
+        {
+            containers.AddRange(containerlist);
+        }
 
         public void TryPlaceAllContainersOnShip()
         {
-            ship.TryPlaceValuableContainers(GetContainersFromListOnContainerType(ContainerType.Valuable));
-            ship.TryPlaceCooledContainers(GetContainersFromListOnContainerType(ContainerType.Cooled));
-            ship.TryPlaceNormalContainers(GetContainersFromListOnContainerType(ContainerType.Normal));
+            ship.PlaceValuableContainers(GetContainersFromListOnContainerType(ContainerType.Valuable));
+            ship.PlaceCooledContainers(GetContainersFromListOnContainerType(ContainerType.Cooled));
+            ship.PlaceNormalContainers(GetContainersFromListOnContainerType(ContainerType.Normal));
         }
 
         private List<Container> GetContainersFromListOnContainerType(ContainerType containerType)

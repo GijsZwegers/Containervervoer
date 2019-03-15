@@ -9,21 +9,22 @@ namespace Containervervoer.Classes
 {
     public class Ship
     {
+
         public int Lenght { get; private set; }
         public int Width { get; private set; }
-        public int Weight { get; private set; }
+        public int ShipMaxWeight { get; private set; }
 
         public int MaxDeckLoad = 150000;
         private int Valuablemultiplier = 2;
 
-        public List<DeckPlace> DeckPlaces { get; set; }
+        public List<DeckPlace> DeckPlaces { get; set; } = new List<DeckPlace>();
 
         public Ship(int length, int width)
         {
             Lenght = length;    //Double?
             Width = width * 2;      //Double?
 
-            Weight = Lenght * Width * MaxDeckLoad;
+            ShipMaxWeight = Lenght * Width * MaxDeckLoad;
 
 
             //X = length Y = width
@@ -37,28 +38,48 @@ namespace Containervervoer.Classes
             }
         }
 
-        public void TryPlaceValuableContainers(List<Container> valuableContainers)
+        public void PlaceValuableContainers(List<Container> valuableContainers)
         {
             List<DeckPlace> deckPlacesForValuableContainers = new List<DeckPlace>();
             if (Lenght > 0)
             {
-                deckPlacesForValuableContainers.AddRange(DeckPlaces.Where(d => d.Location[0] == Lenght).ToList());
+                deckPlacesForValuableContainers.AddRange(DeckPlaces.Where(d => d.Location[0] == DeckPlaces.Max(p => p.Location[0])).ToList());
             }
 
             deckPlacesForValuableContainers.AddRange(DeckPlaces.Where(d => d.Location[0] == 0).ToList());
 
             for (int i = 0; i < valuableContainers.Count(); i++)
             {
-                deckPlacesForValuableContainers[i].addcontainer(valuableContainers[i]);
+                deckPlacesForValuableContainers[i].AddContainer(valuableContainers[i]);
             }
         }
 
-        public void TryPlaceCooledContainers(List<Container> valuableContainers)
+        public void PlaceCooledContainers(List<Container> cooledContainers)
         {
+            List<DeckPlace> deckPlacesForCooledContainers = new List<DeckPlace>(DeckPlaces.Where(d => d.Location[0] == 0));
 
+            int iNumberOfDeckplaces = deckPlacesForCooledContainers.Count();
+            int iDeckplace = 0;
+            foreach (Container container in cooledContainers)
+            {
+                if (iDeckplace > iNumberOfDeckplaces)
+                {
+                    iDeckplace = 0;
+                }
+                while (!deckPlacesForCooledContainers[iDeckplace].AddContainer(container)))
+                {
+                    iDeckplace++;
+                    if (iDeckplace > iNumberOfDeckplaces)
+                    {
+                        iDeckplace = 0;
+                    }
+                }
+
+                iDeckplace++;
+            }
         }
             
-        public void TryPlaceNormalContainers(List<Container> valuableContainers)
+        public void PlaceNormalContainers(List<Container> valuableContainers)
         {
 
         }
@@ -84,7 +105,7 @@ namespace Containervervoer.Classes
                 return response;
             }
 
-            if (!TryPlaceCooledContainersOnFrontDeckPlace(containers))
+            if (!CheckIfCooledContainerCanBePlacedOnFrontDeckPlace(containers))
             {
                 response.Information = "Er is niet genoeg plaats voor de gekoelde containers";
                 return response;
@@ -98,7 +119,7 @@ namespace Containervervoer.Classes
         {
 
             int dada = containers.Sum(o => o.Weight);
-            if (!((Weight / 2) < containers.Sum(o => o.Weight)))
+            if (!((ShipMaxWeight / 2) < containers.Sum(o => o.Weight)))
                 return false;
 
             return true;
@@ -124,7 +145,7 @@ namespace Containervervoer.Classes
             return ValuableContainersOnFront;
         }
 
-        private bool TryPlaceCooledContainersOnFrontDeckPlace(List<Container> containers)
+        private bool CheckIfCooledContainerCanBePlacedOnFrontDeckPlace(List<Container> containers)
         {
             List<DeckPlace> deckPlacesOnFront = DeckPlaces.Where(d => d.Location[0] == 0).ToList();
             List<Container> ValuableContainersOnFront = AddLowestContainersInWeightToFrontDeck(containers);
@@ -135,7 +156,7 @@ namespace Containervervoer.Classes
 
             for (int d = 0; d < ValuableContainersOnFront.Count(); d++)
             {
-                if (!deckPlacesOnFront[d].addcontainer(ValuableContainersOnFront[d]))
+                if (!deckPlacesOnFront[d].CheckIfContainerCanBeAdded(ValuableContainersOnFront[d]))
                     return false;
             }
 
@@ -146,7 +167,7 @@ namespace Containervervoer.Classes
             {
                 if (deckPlacesOnFront.Count() > p)
                 {
-                    if (!DeckPlaces[p].addcontainer(cooledcontainer))
+                    if (!DeckPlaces[p].CheckIfContainerCanBeAdded(cooledcontainer))
                         p++;
                 }
                 else

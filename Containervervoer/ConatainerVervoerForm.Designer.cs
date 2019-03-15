@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lbShipCapacity = new System.Windows.Forms.Label();
+            this.btTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nmShipLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmShipHeight)).BeginInit();
             this.SuspendLayout();
@@ -189,11 +190,22 @@
             this.lbShipCapacity.TabIndex = 9;
             this.lbShipCapacity.Text = "Schip capaciteit:";
             // 
-            // ShipForm
+            // btTest
+            // 
+            this.btTest.Location = new System.Drawing.Point(271, 199);
+            this.btTest.Name = "btTest";
+            this.btTest.Size = new System.Drawing.Size(75, 23);
+            this.btTest.TabIndex = 10;
+            this.btTest.Text = "TestButton";
+            this.btTest.UseVisualStyleBackColor = true;
+            this.btTest.Click += new System.EventHandler(this.btTest_Click);
+            // 
+            // ConatainerVervoerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 611);
+            this.Controls.Add(this.btTest);
             this.Controls.Add(this.lbShipCapacity);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -205,7 +217,7 @@
             this.Controls.Add(this.lvContainers);
             this.Controls.Add(this.btStandardLoading);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "ShipForm";
+            this.Name = "ConatainerVervoerForm";
             this.Text = "Containervervoer";
             ((System.ComponentModel.ISupportInitialize)(this.nmShipLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmShipHeight)).EndInit();
@@ -228,6 +240,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbShipCapacity;
+        private System.Windows.Forms.Button btTest;
     }
 }
 

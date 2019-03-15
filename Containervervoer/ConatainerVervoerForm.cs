@@ -49,7 +49,7 @@ namespace Containervervoer
         private void CorrectShipWeight(object sender, EventArgs e)
         {
             Ship ship = new Ship(Convert.ToInt32(nmShipLength.Value), Convert.ToInt32(nmShipHeight.Value));
-            lbShipCapacity.Text = ship.Weight.ToString();
+            lbShipCapacity.Text = ship.ShipMaxWeight.ToString();
         }
 
         private void btStart_Click(object sender, EventArgs e)
@@ -57,6 +57,18 @@ namespace Containervervoer
             Ship ship = new Ship(Convert.ToInt32(nmShipLength.Value), Convert.ToInt32(nmShipHeight.Value));
 
             ShipForm boatForm = new ShipForm(ship.Lenght, ship.Width);
+        }
+
+        private void btTest_Click(object sender, EventArgs e)
+        {
+            TestClass testClass = new TestClass();
+            Dock dock = new Dock();
+
+            dock.CreateShip(2, 2);
+
+            dock.AddMultipleContainers(testClass.Setup());
+            dock.TryPlaceAllContainersOnShip();
+            dock.RunContainervervoerSetup();
         }
     }
 }
