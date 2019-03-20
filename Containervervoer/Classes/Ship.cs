@@ -62,14 +62,14 @@ namespace Containervervoer.Classes
             int iDeckplace = 0;
             foreach (Container container in cooledContainers)
             {
-                if (iDeckplace > iNumberOfDeckplaces)
+                if (iDeckplace > iNumberOfDeckplaces-1)
                 {
                     iDeckplace = 0;
                 }
-                while (!deckPlacesForCooledContainers[iDeckplace].AddContainer(container)))
+                while (!deckPlacesForCooledContainers[iDeckplace].AddContainer(container))
                 {
                     iDeckplace++;
-                    if (iDeckplace > iNumberOfDeckplaces)
+                    if (iDeckplace > iNumberOfDeckplaces-1)
                     {
                         iDeckplace = 0;
                     }
@@ -79,9 +79,17 @@ namespace Containervervoer.Classes
             }
         }
             
-        public void PlaceNormalContainers(List<Container> valuableContainers)
+        public void PlaceNormalContainers(List<Container> NormalContainers)
         {
-
+            int i = 0;
+                foreach (Container container in NormalContainers)
+                {
+                    while (!DeckPlaces[i].AddContainer(container))
+                    {
+                        i++;
+                    }
+                    i = 0;
+                }
         }
 
         public ValidationResponse CheckPossibilityForSolution(List<Container> containers)
@@ -175,6 +183,24 @@ namespace Containervervoer.Classes
             }
 
             return true;
+        }
+
+        public Tuple<int, int> GetLoadOfShipSides()
+        {
+            int right = 0;
+            foreach (DeckPlace item in DeckPlaces.Where(d => d.Location[0] < Lenght / 2).ToList())
+            {
+                right += item.Containers.Sum(c => c.Weight);
+            }
+
+            int left = 0;
+            foreach (DeckPlace item in DeckPlaces)
+            {
+                left += item.Containers.Sum(c => c.Weight);
+            }
+
+
+            return new Tuple<int, int>(right, left);
         }
 
     }

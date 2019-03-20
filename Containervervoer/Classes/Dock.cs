@@ -18,8 +18,28 @@ namespace Containervervoer.Classes
 
         public void RunContainervervoerSetup()
         {
-            CheckIfSolutionIsPossible();
-            TryPlaceAllContainersOnShip();
+            if (ship != null)
+            {
+                CheckIfSolutionIsPossible();
+                TryPlaceAllContainersOnShip();
+                CheckIfShipIsCorrectlyBalanced();
+            }
+        }
+
+        private bool CheckIfShipIsCorrectlyBalanced()
+        {
+            int test = containers.Sum(o => o.Weight);
+            Tuple<int, int> WeightOfShipSides = ship.GetLoadOfShipSides();
+            double percentage = CalculateDiffrecnceInPercentage(WeightOfShipSides.Item1, WeightOfShipSides.Item2);
+            if (!(percentage < 60 && percentage > 40 || percentage > -60 && percentage < -40))
+                return false;
+
+            return true;
+        }
+
+        private double CalculateDiffrecnceInPercentage(double left, double right)
+        {
+            return ((left - right) / right) * 100;
         }
 
         private void CheckIfSolutionIsPossible()
@@ -62,6 +82,6 @@ namespace Containervervoer.Classes
         {
             containers.Remove(container);
         }
-        
+
     }
 }

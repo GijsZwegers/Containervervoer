@@ -52,10 +52,9 @@ namespace Containervervoer.Classes
             return true;
         }
 
-        public List<Container> SortConainers(List<Container> containers)
-        {
-
-            return Containers;
-        }
+        //public List<Container> SortConainers(List<Container> containers)
+        //{
+        //    return Containers;
+        //}
     }
 }

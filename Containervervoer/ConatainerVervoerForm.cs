@@ -67,7 +67,7 @@ namespace Containervervoer
             dock.CreateShip(2, 2);
 
             dock.AddMultipleContainers(testClass.Setup());
-            dock.TryPlaceAllContainersOnShip();
+            //dock.TryPlaceAllContainersOnShip();
             dock.RunContainervervoerSetup();
         }
     }

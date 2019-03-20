@@ -15,17 +15,9 @@ namespace Containervervoer
         [STAThread]
         static void Main()
         {
-            //Testing purpose
-            
-
-
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ConatainerVervoerForm());
-
-            
-
         }
     }
 }

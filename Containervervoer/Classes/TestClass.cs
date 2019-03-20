@@ -175,11 +175,6 @@ namespace Containervervoer.Classes
                 new Container(ContainerType.Normal, 5000),
                 new Container(ContainerType.Normal, 4000),
                 new Container(ContainerType.Normal, 6000),
-                new Container(ContainerType.Normal, 4000),
-                new Container(ContainerType.Normal, 7000),
-                new Container(ContainerType.Cooled, 10000),
-                new Container(ContainerType.Cooled, 12000),
-                new Container(ContainerType.Normal, 4000),
                 new Container(ContainerType.Valuable, 4100),
                 new Container(ContainerType.Normal, 4000),
                 new Container(ContainerType.Valuable, 4200),
@@ -199,10 +194,5 @@ namespace Containervervoer.Classes
 
              return containers;
         }
-
-
-
     }
-
-    
 }
